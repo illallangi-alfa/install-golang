@@ -1,0 +1,27 @@
+---
+golang:
+  download:
+    raspbian: &raspbian
+      - name: go
+        url: https://dl.google.com/go/go1.14.2.linux-armv6l.tar.gz
+      - name: gofmt
+        url: https://dl.google.com/go/go1.14.2.linux-armv6l.tar.gz
+    debian: &debian
+      - name: go
+        url: https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+      - name: gofmt
+        url: https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+    debian_armv7l: *raspbian
+    debian_x86_64: *debian
+
+  directories:
+    common: &directories
+      - path:  "/etc/profile.d"
+    debian_armv7l: *directories
+    debian_x86_64: *directories
+
+  templates:
+    common: &templates
+      - dest:  "/etc/profile.d/go-path.sh"
+    debian_armv7l: *templates
+    debian_x86_64: *templates

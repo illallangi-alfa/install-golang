@@ -1,0 +1,20 @@
+---
+
+- name: "Install golang (debian)"
+  unarchive:
+    src: "{{ item.url }}"
+    dest: "/usr/local"
+    remote_src: yes
+    creates: "/usr/local/go/bin/{{ item.name }}"
+  with_items: "{{ golang.download[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] }}"
+  tags:
+    - "golang"
+
+- name: "Link binaries"
+  file:
+    src: "/usr/local/go/bin/{{ item.name }}"
+    dest: "/usr/local/bin/{{ item.name }}"
+    state: link
+  with_items: "{{ golang.download[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] }}"
+  tags:
+    - "golang"
